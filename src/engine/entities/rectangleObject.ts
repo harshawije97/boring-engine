@@ -1,14 +1,11 @@
 import type { Renderer } from "../rendering/renderer";
 import { GameObject } from "./gameObject";
 
-export class Rectangle extends GameObject {
+export class RectangleObject extends GameObject {
     width: number;
     height: number;
     color: string;
     text: string;
-
-    velocityX: number = 0;
-    velocityY: number = 0;
 
     // Default speed
     speed: number = 200;
@@ -21,15 +18,7 @@ export class Rectangle extends GameObject {
         this.text = text;
     }
 
-    update(dt: number): void {
-        // if (input && input.isPressed("ArrowRight")) {
-        //     this.x += this.speed * dt;
-        // }
-
-        // if (input && input.isPressed("ArrowLeft")) {
-        //     this.x -= this.speed * dt;
-        // }
-
+    update(dt: number) {
         this.x += this.velocityX * dt;
         this.y += this.velocityY * dt;
     }

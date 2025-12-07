@@ -1,8 +1,9 @@
 import { Game } from "./engine/core/game";
 import { Input } from "./engine/core/input";
 import { PlayerObject } from "./engine/entities/playerObject";
-import { Rectangle } from "./engine/entities/rectangle";
+import { RectangleObject } from "./engine/entities/rectangleObject";
 import { Physics } from "./engine/physics/physics";
+import { RigidBody } from "./engine/physics/rigidBody";
 import { Renderer } from "./engine/rendering/renderer";
 import { Scene } from "./engine/scene/scene";
 
@@ -17,34 +18,42 @@ const physics = new Physics(canvas.width, canvas.height, 100);
 const input = new Input();
 const scene = new Scene(physics);
 
-scene.setPhysics(physics);
+// Boxes with gravity
+const greenBox = new RectangleObject(60, 60, "#30ff6483");
+greenBox.x = 260;
+greenBox.y = 100;
 
-// Rectangle one
-const rectangle = new Rectangle(80, 80, "#155dfc");
-rectangle.x = 250;
-rectangle.y = 100;
-rectangle.useGravity = true;
+greenBox.rigidBody = new RigidBody(2);
+greenBox.rigidBody.useGravity = true;
+greenBox.rigidBody.velocityY = 20;
 
-// Rectangle two
-const rectangle2 = new Rectangle(80, 80, "#ffd230");
-rectangle2.x = 300;
-rectangle2.y = 100;
-rectangle2.velocityY = -140;
-rectangle2.velocityX = 100;
+const blueBox = new RectangleObject(60, 60, "#4c30ffbb");
+blueBox.x = 220;
+blueBox.y = 300;
 
-const box = new Rectangle(60, 60, "#30eeffdc");
+blueBox.rigidBody = new RigidBody();
+blueBox.rigidBody.useGravity = true;
+blueBox.rigidBody.velocityY = 60;
+
+
+const box = new RectangleObject(60, 60, "#30eeffdc");
 box.x = canvas.width - 100;
-box.y = 350;
+box.y = canvas.height;
 
 // Player object
-const player = new PlayerObject(input, 200, 20, 60, "#ff0000", "@Player");
+const player = new PlayerObject(
+    20,
+    60,
+    input,
+    200,
+    "#ff0000",
+    "@Player"
+);
+
 player.x = 100;
-player.y = 350;
+player.y = canvas.height;
 
-
-scene.add(rectangle);
-scene.add(rectangle2);
-scene.add(box);
-scene.add(player);
+scene.add(blueBox);
+scene.add(greenBox);
 
 game.start(scene);

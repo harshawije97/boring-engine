@@ -19,15 +19,17 @@ export class Scene {
     remove(object: GameObject) {
         this.objects = this.objects.filter(o => o !== object);
     }
+
     update(dt: number) {
+        this.physics.updateSceneObjects(this.objects, dt);
+
         for (const object of this.objects) {
-            if (object.active) {
-                object.update(dt);
+            if (!object.active) {
+                continue;
             }
 
-            if (this.physics && object) {
-                this.physics.updateObjectMotion(object, dt);
-            }
+            object.update(dt);
+            this.physics.updateObjectMotion(object, dt);
         }
     }
 

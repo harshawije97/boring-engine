@@ -1,11 +1,11 @@
 import type { Input } from "../core/input";
-import { Rectangle } from "./rectangle";
+import { RectangleObject } from "./rectangleObject";
 
-export class PlayerObject extends Rectangle {
+export class PlayerObject extends RectangleObject {
     speed: number;
     input: Input;
 
-    constructor(input: Input, speed: number, width: number = 50, height: number = 50, color: string = "#000000", text: string = "") {
+    constructor(width: number = 50, height: number = 50, input: Input, speed: number, color: string = "#000000", text: string = "") {
         super(width, height, color, text);
         this.input = input;
         this.speed = speed;
