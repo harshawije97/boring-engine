@@ -12,17 +12,18 @@ canvas.height = 450;
 
 const renderer = new Renderer(canvas);
 const game = new Game(renderer);
+const physics = new Physics(canvas.width, canvas.height, 100);
+
 const input = new Input();
-const scene = new Scene();
-const physics = new Physics(canvas.width, canvas.height);
+const scene = new Scene(physics);
+
 scene.setPhysics(physics);
 
 // Rectangle one
 const rectangle = new Rectangle(80, 80, "#155dfc");
-rectangle.x = 100;
+rectangle.x = 250;
 rectangle.y = 100;
-rectangle.velocityX = 70;
-rectangle.velocityY = 180;
+rectangle.useGravity = true;
 
 // Rectangle two
 const rectangle2 = new Rectangle(80, 80, "#ffd230");

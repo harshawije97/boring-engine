@@ -1,4 +1,3 @@
-import type { Input } from "../core/input";
 import type { Renderer } from "../rendering/renderer";
 import { GameObject } from "./gameObject";
 

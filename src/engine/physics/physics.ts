@@ -1,33 +1,58 @@
-import type { Rectangle } from "../entities/rectangle";
+import type { GameObject } from "../entities/gameObject";
 
 export class Physics {
     constructor(
         public worldWidth: number,
-        public worldHeight: number) { }
+        public worldHeight: number,
+        public gravity: number = 800
+    ) { }
 
-    updateRectangleMotion(rectangle: Rectangle) {
+    // apply gravity
+    applyGravity(object: GameObject, dt: number) {
+        if (object.useGravity) {
+            object.velocityY += this.gravity * object.gravityScale * dt;
+        }
+    }
+
+    updateObjectMotion(object: GameObject, dt: number) {
+        this.applyGravity(object, dt);
+
+        // Update positions
+        object.x += object.velocityX * dt;
+        object.y += object.velocityY * dt;
+
+        // Collision detection
+
         // Collision in start wall
-        if (rectangle.x + rectangle.width > this.worldWidth) {
-            rectangle.x = this.worldWidth - rectangle.width;
-            rectangle.velocityX *= -1;
+        if (object.x + (object as any).width > this.worldWidth) {
+            object.x = this.worldWidth - (object as any).width;
+            object.velocityX *= -1;
         }
 
         // Collision in end wall
-        if (rectangle.x < 0) {
-            rectangle.x = 0;
-            rectangle.velocityX *= -1;
+        if (object.x < 0) {
+            object.x = 0;
+            object.velocityX *= -1;
         }
 
         // Collision in bottom wall
-        if (rectangle.y + rectangle.height > this.worldHeight) {
-            rectangle.y = this.worldHeight - rectangle.height;
-            rectangle.velocityY *= -1;
+        if (object.y + (object as any).height > this.worldHeight) {
+            object.y = this.worldHeight - (object as any).height;
+            object.velocityY *= -1;
+        }
+
+        // If the gravity is not enabled, prevent objects from falling to the ground
+        if (!object.useGravity) {
+            if (object.y + (object as any).height > this.worldHeight) {
+                object.y = this.worldHeight - (object as any).height;
+                object.velocityY = 0;
+            }
         }
 
         // Collision in top wall
-        if (rectangle.y < 0) {
-            rectangle.y = 0;
-            rectangle.velocityY *= -1;
+        if (object.y < 0) {
+            object.y = 0;
+            object.velocityY *= -1;
         }
     }
 }

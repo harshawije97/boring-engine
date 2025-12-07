@@ -1,11 +1,14 @@
 import type { GameObject } from "../entities/gameObject";
-import { Rectangle } from "../entities/rectangle";
 import type { Physics } from "../physics/physics";
 import type { Renderer } from "../rendering/renderer";
 
 export class Scene {
     private objects: GameObject[] = [];
-    physics: Physics | null = null;
+    physics: Physics;
+
+    constructor(physics: Physics) {
+        this.physics = physics
+    }
 
     add(object: GameObject) {
         this.objects.push(object);
@@ -22,8 +25,8 @@ export class Scene {
                 object.update(dt);
             }
 
-            if (this.physics && object instanceof Rectangle) {
-                this.physics.updateRectangleMotion(object);
+            if (this.physics && object) {
+                this.physics.updateObjectMotion(object, dt);
             }
         }
     }
