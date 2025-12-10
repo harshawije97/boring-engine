@@ -7,9 +7,6 @@ export class RectangleObject extends GameObject {
     color: string;
     text: string;
 
-    // Default speed
-    speed: number = 200;
-
     constructor(width: number = 50, height: number = 50, color: string = "#000000", text: string = "") {
         super();
         this.width = width;
@@ -18,9 +15,9 @@ export class RectangleObject extends GameObject {
         this.text = text;
     }
 
-    update(dt: number) {
-        this.x += this.velocityX * dt;
-        this.y += this.velocityY * dt;
+    update(_dt: number) {
+        // Custom update logic can be added here
+        // Physics motion is handled by Physics.updateObjectMotion
     }
 
     render(renderer: Renderer) {

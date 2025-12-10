@@ -21,15 +21,14 @@ export class Scene {
     }
 
     update(dt: number) {
+        // Physics update handles motion integration and collision resolution
         this.physics.updateSceneObjects(this.objects, dt);
 
+        // Call custom update logic for each object
         for (const object of this.objects) {
-            if (!object.active) {
-                continue;
+            if (object.active) {
+                object.update(dt);
             }
-
-            object.update(dt);
-            this.physics.updateObjectMotion(object, dt);
         }
     }
 

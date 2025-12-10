@@ -17,15 +17,7 @@ export abstract class GameObject {
     public scaleX: number = 1;
     public scaleY: number = 1;
 
-    velocityX: number = 0;
-    velocityY: number = 0;
-
     public active: boolean = true;
-
-    // Physics*****
-    // Add gravity
-    useGravity: boolean = false;
-    gravityScale: number = 1;
 
     // Add rigidbody (optional)
     rigidBody?: RigidBody;

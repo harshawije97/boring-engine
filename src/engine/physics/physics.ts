@@ -99,7 +99,7 @@ export class Physics {
         const width = object.width;
         const height = object.height;
 
-        // Gravity with collision
+        // World boundary collisions
         // Left end
         if (object.x < 0) {
             object.x = 0;
@@ -109,13 +109,13 @@ export class Physics {
         // Right End
         if (object.x + width > this.worldWidth) {
             object.x = this.worldWidth - width;
-            object.velocityX *= -rigidBody.restitution;
+            rigidBody.velocityX *= -rigidBody.restitution;
         }
 
         // Top end
         if (object.y < 0) {
             object.y = 0;
-            object.velocityY *= -rigidBody.restitution;
+            rigidBody.velocityY *= -rigidBody.restitution;
         }
 
         // Bottom collision
