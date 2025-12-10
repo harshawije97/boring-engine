@@ -96,6 +96,10 @@ export class Physics {
         object.x += rigidBody.velocityX * dt;
         object.y += rigidBody.velocityY * dt;
 
+        object.rotation += rigidBody.angularVelocity * dt;
+        // Angular damping
+        rigidBody.angularVelocity *= rigidBody.angularDamping;
+
         const width = object.width;
         const height = object.height;
 

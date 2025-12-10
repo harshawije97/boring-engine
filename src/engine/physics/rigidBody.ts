@@ -7,6 +7,10 @@ export class RigidBody {
     useGravity: boolean = true;
     gravityScale: number = 1;
 
+    // Angular dynamics
+    angularVelocity:number = 0;
+    angularDamping: number = 0; // Resistance
+
     constructor(mass: number = 1) {
         this.mass = mass;
     }

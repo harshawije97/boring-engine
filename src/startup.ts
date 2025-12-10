@@ -26,6 +26,7 @@ greenBox.y = 100;
 greenBox.rigidBody = new RigidBody(2);
 greenBox.rigidBody.useGravity = true;
 greenBox.rigidBody.velocityY = 20;
+greenBox.rigidBody.angularVelocity = 2;
 
 const blueBox = new RectangleObject(60, 60, "#4c30ffbb");
 blueBox.x = 220;
@@ -34,6 +35,7 @@ blueBox.y = 300;
 blueBox.rigidBody = new RigidBody();
 blueBox.rigidBody.useGravity = true;
 blueBox.rigidBody.velocityY = 60;
+blueBox.rigidBody.angularVelocity = 0;
 
 
 const box = new RectangleObject(60, 60, "#30eeffdc");
