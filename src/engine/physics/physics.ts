@@ -14,16 +14,16 @@ export class Physics {
         rb.velocityY += this.gravity * rb.gravityScale * dt;
     }
 
-    // detect collision resolution
-    /**
-     * What does this function do: detects penetration depth
-     * pushes objects apart equally
-     * applies bounce based on restitution
-     * Handles X and Y collisions separately
-     * @param a 
-     * @param b 
-     * @returns 
-     */
+    // Apply torque to angular dynamics (rotations)
+    applyTorque(rb: RigidBody, dt: number) {
+        // Prevent division by zero
+        if (rb.momentOfInertia === 0) return;
+
+        // Angular acceleration = torque / moment of inertia
+        const angularAcceleration = rb.torque / rb.momentOfInertia;
+        rb.angularVelocity += angularAcceleration * dt;
+    }
+
     resolveCollision(a: GameObject, b: GameObject) {
         if (!a.rigidBody && !b.rigidBody) return;
 
@@ -88,17 +88,27 @@ export class Physics {
         }
 
         const rigidBody = object.rigidBody;
+
+        // Apply gravity
         if (rigidBody.useGravity) {
             this.applyGravity(rigidBody, dt);
         }
 
-        // Update positions
+        // Apply torque
+        this.applyTorque(rigidBody, dt);
+
+        // Update linear positions
         object.x += rigidBody.velocityX * dt;
         object.y += rigidBody.velocityY * dt;
 
+        // Update angular position (rotation)
         object.rotation += rigidBody.angularVelocity * dt;
-        // Angular damping
+
+        // Apply angular damping
         rigidBody.angularVelocity *= rigidBody.angularDamping;
+
+        // Clear accumulated torque for next frame
+        rigidBody.clearTorque();
 
         const width = object.width;
         const height = object.height;
